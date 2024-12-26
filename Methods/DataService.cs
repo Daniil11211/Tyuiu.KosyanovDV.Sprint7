@@ -8,11 +8,6 @@ public class DataService
     {
         int rows = matrix.GetLength(0);
 
-        if (rows <= 2)
-        {
-            return new int[0];
-        }
-
         int newSize = rows - 2;
         int[] resultArray = new int[newSize];
 

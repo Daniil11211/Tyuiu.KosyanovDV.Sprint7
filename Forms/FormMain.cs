@@ -68,16 +68,19 @@ namespace Forms
                 matrixValues = LoadDataFromFile(openFilePath);
 
                 dataGridViewTable_KDV.ColumnCount = cols;
-                dataGridViewTable_KDV.RowCount = rows;
+                dataGridViewTable_KDV.RowCount = rows - 1;
+
+                for (int i = 0; i < matrixValues.GetLength(1); i++)
+                {
+                    dataGridViewTable_KDV.Columns[i].HeaderCell.Value = matrixValues[0, i];
+                }
 
 
-
-
-                for (int r = 0; r < rows; r++)
+                for (int r = 1; r < rows; r++)
                 {
                     for (int c = 0; c < cols; c++)
                     {
-                        dataGridViewTable_KDV.Rows[r].Cells[c].Value = matrixValues[r, c];
+                        dataGridViewTable_KDV.Rows[r-1].Cells[c].Value = matrixValues[r, c];
                     }
                 }
 
@@ -121,6 +124,17 @@ namespace Forms
 
                 int rows = dataGridViewTable_KDV.RowCount;
                 int cols = dataGridViewTable_KDV.ColumnCount;
+
+                string header = "";
+                for (int j = 0; j < cols; j++)
+                {
+                    header += dataGridViewTable_KDV.Columns[j].HeaderText;
+                    if (j != cols - 1)
+                    {
+                        header += ";";
+                    }
+                }
+                File.AppendAllText(path, header + Environment.NewLine, Encoding.UTF8);
 
                 string str = "";
 
@@ -173,16 +187,16 @@ namespace Forms
 
         private void buttonCalcAverageValue_KDV_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
             int[] arrayValues = ds.GetArrayColumn(matrixValues, Convert.ToInt32(textBoxColumn_KDV.Text) - 1);
             double res = ds.CalcAverageValue(arrayValues, Convert.ToInt32(textBoxRound.Text));
             MessageBox.Show($"Среднее значение: {res}", "Вычислить среднее значение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Некорректный ввод данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            }
+            catch
+            {
+                MessageBox.Show("Некорректный ввод данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
@@ -267,19 +281,19 @@ namespace Forms
 
         private void buttonSearch_KDV_Click(object sender, EventArgs e)
         {
-            try
+            string search = textBoxSearch_KDV.Text.Trim();
+
+
+            if (string.IsNullOrEmpty(search))
             {
-                string search = textBoxSearch_KDV.Text.Trim();
+                MessageBox.Show("Поле пусто");
+                return;
+            }
+            else if (!(string.IsNullOrEmpty(search)))
+            {
 
-                if (string.IsNullOrEmpty(search))
-                {
-                    MessageBox.Show("Поле пусто");
-                    return;
-                }
 
-                bool found = false;
-
-                for (int i = 0; i < dataGridViewTable_KDV.Rows.Count; i++)
+                for (int i = 1; i < dataGridViewTable_KDV.Rows.Count; i++)
                 {
                     for (int j = 0; j < dataGridViewTable_KDV.Columns.Count; j++)
                     {
@@ -289,15 +303,10 @@ namespace Forms
                         {
                             row.Selected = true;
                             dataGridViewTable_KDV.FirstDisplayedScrollingRowIndex = i;
-                            found = true;
                             break;
                         }
                     }
                 }
-            }
-            catch
-            {
-                MessageBox.Show("Пользователь с такими данными не найден", "Ошибка", MessageBoxButtons.OK);
             }
         }
 
@@ -324,18 +333,21 @@ namespace Forms
             {
                 int[] valueArray = ds.GetArrayColumn(matrixValues, Convert.ToInt32(textBoxChartColumn_KDV.Text) - 1);
 
-                this.chartPrint_KDV.ChartAreas[0].AxisX.Title = $"{dataGridViewTable_KDV.Columns[Convert.ToInt32(textBoxChartColumn_KDV.Text) - 1].HeaderCell.Value}";
-
-                for (int i = 1; i < valueArray.Length; i++)
+                int columnIndex = int.Parse(textBoxChartColumn_KDV.Text);
+                
+                    chartPrint_KDV.ChartAreas[0].AxisX.Title =
+                        $"{dataGridViewTable_KDV.Columns[columnIndex - 1].HeaderCell.Value}";
+                
+            for (int i = 1; i < valueArray.Length; i++)
                 {
                     chartPrint_KDV.Series[0].Points.AddXY(i, valueArray[i]);
                 }
-            }
+        }
             catch
             {
                 MessageBox.Show("Некорректный формат данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+}
 
         private void buttonDeleteChart_Click(object sender, EventArgs e)
         {

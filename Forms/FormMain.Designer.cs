@@ -76,9 +76,8 @@
             // 
             // dataGridViewTable_KDV
             // 
-            dataGridViewTable_KDV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewTable_KDV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             dataGridViewTable_KDV.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewTable_KDV.ColumnHeadersVisible = false;
             dataGridViewTable_KDV.Location = new Point(33, 287);
             dataGridViewTable_KDV.MinimumSize = new Size(539, 318);
             dataGridViewTable_KDV.Name = "dataGridViewTable_KDV";
@@ -430,7 +429,7 @@
             // 
             // chartPrint_KDV
             // 
-            chartPrint_KDV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            chartPrint_KDV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             chartArea2.Name = "ChartArea1";
             chartPrint_KDV.ChartAreas.Add(chartArea2);
             legend2.Enabled = false;
