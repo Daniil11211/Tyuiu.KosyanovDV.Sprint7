@@ -410,6 +410,7 @@
             buttonDeleteChart.Name = "buttonDeleteChart";
             buttonDeleteChart.Size = new Size(87, 51);
             buttonDeleteChart.TabIndex = 1;
+            toolTip.SetToolTip(buttonDeleteChart, "Удалить график\r\nОчистить имеющийся график");
             buttonDeleteChart.UseVisualStyleBackColor = true;
             buttonDeleteChart.Click += buttonDeleteChart_Click;
             // 
@@ -421,6 +422,7 @@
             buttonBuildChart_KDV.Name = "buttonBuildChart_KDV";
             buttonBuildChart_KDV.Size = new Size(87, 51);
             buttonBuildChart_KDV.TabIndex = 0;
+            toolTip.SetToolTip(buttonBuildChart_KDV, "Построить график\r\nВведите столбец, по которому хотите построить график");
             buttonBuildChart_KDV.UseVisualStyleBackColor = true;
             buttonBuildChart_KDV.Click += buttonBuildChart_KDV_Click;
             // 

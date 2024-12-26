@@ -221,7 +221,7 @@ namespace Forms
         {
             try
             {
-                int res = matrixValues.GetLength(0);
+                int res = matrixValues.GetLength(0) - 1;
                 MessageBox.Show($"Количество сотрудников: {res}", "Вычислить количество", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch
@@ -264,7 +264,8 @@ namespace Forms
 
         private void buttonInfo_KDV_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Данная программа выполнена в рамках изучения языка программирования C#, студентом Тюменского Идустриального университета, института Высшей школы цифровых технологий, группы ПКТб-24-1 Косьяновым Даниилом Васильевичем", "Справка", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            FormInfo info = new FormInfo();
+            info.ShowDialog();
         }
 
         private void buttonSearch_KDV_Click(object sender, EventArgs e)
