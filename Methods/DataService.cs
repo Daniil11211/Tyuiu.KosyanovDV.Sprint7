@@ -4,15 +4,24 @@ namespace Methods;
 
 public class DataService
 {
-    public int[] GetArrayColumn(string[,] matrix, int c)
+    public int[] GetArrayColumn(string[,] matrix, int columnIndex)
     {
-        int columns = matrix.GetLength(0);
-        int[] arrayColumn = new int[columns];
-        for (int i = 1; i < matrix.GetLength(0); i++)
+        int rows = matrix.GetLength(0);
+
+        if (rows <= 2)
         {
-            arrayColumn[i] = Convert.ToInt32(matrix[i, c]);
+            return new int[0];
         }
-        return arrayColumn;
+
+        int newSize = rows - 2;
+        int[] resultArray = new int[newSize];
+
+        for (int i = 1; i < rows - 1; i++)
+        {
+            resultArray[i - 1] = Convert.ToInt32(matrix[i, columnIndex]);
+        }
+
+        return resultArray;
     }
 
     public double CalcAverageValue(int[] array, int n)

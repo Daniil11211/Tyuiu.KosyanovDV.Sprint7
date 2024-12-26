@@ -68,22 +68,19 @@ namespace Forms
                 matrixValues = LoadDataFromFile(openFilePath);
 
                 dataGridViewTable_KDV.ColumnCount = cols;
-                dataGridViewTable_KDV.RowCount = rows - 1;
+                dataGridViewTable_KDV.RowCount = rows;
 
 
-                for (int i = 0; i < cols; i++)
-                {
-                    dataGridViewTable_KDV.Columns[i].HeaderCell.Value = matrixValues[0, i];
-                }
 
-                for (int r = 1; r < rows; r++)
+
+                for (int r = 0; r < rows; r++)
                 {
                     for (int c = 0; c < cols; c++)
                     {
-                        dataGridViewTable_KDV.Rows[r-1].Cells[c].Value = matrixValues[r, c];
+                        dataGridViewTable_KDV.Rows[r].Cells[c].Value = matrixValues[r, c];
                     }
                 }
-                
+
                 dataGridViewTable_KDV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
                 chartPrint_KDV.Enabled = true;
@@ -98,12 +95,12 @@ namespace Forms
 
                 radioButtonFromStartToEnd_KDV.Enabled = true;
                 radioButtonFromEndToStart_KDV.Enabled = true;
-        }
+            }
             catch
             {
                 MessageBox.Show("Файл не был выбран", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-}
+        }
 
         private void buttonSaveFile_KDV_Click(object sender, EventArgs e)
         {
@@ -176,16 +173,16 @@ namespace Forms
 
         private void buttonCalcAverageValue_KDV_Click(object sender, EventArgs e)
         {
-            try
-            {
-                int[] arrayValues = ds.GetArrayColumn(matrixValues, Convert.ToInt32(textBoxColumn_KDV.Text) - 1);
-                double res = ds.CalcAverageValue(arrayValues, Convert.ToInt32(textBoxRound.Text));
-                MessageBox.Show($"Среднее значение: {res}", "Вычислить среднее значение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch
-            {
-                MessageBox.Show("Некорректный ввод данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //try
+            //{
+            int[] arrayValues = ds.GetArrayColumn(matrixValues, Convert.ToInt32(textBoxColumn_KDV.Text) - 1);
+            double res = ds.CalcAverageValue(arrayValues, Convert.ToInt32(textBoxRound.Text));
+            MessageBox.Show($"Среднее значение: {res}", "Вычислить среднее значение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Некорректный ввод данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
         }
 
@@ -343,6 +340,11 @@ namespace Forms
         private void buttonDeleteChart_Click(object sender, EventArgs e)
         {
             chartPrint_KDV.Series[0].Points.Clear();
+        }
+
+        private void dataGridViewTable_KDV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

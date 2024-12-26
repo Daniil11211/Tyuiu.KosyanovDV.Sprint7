@@ -11,9 +11,10 @@ namespace TestMehods
             DataService ds = new DataService();
             string[,] data = { { "1", "3", "7" },
                             { "2", "7", "10" },
-                            { "6", "9", "11" } };
+                            { "6", "9", "11" },
+                            { "6", "9", "11" }};
             int[] res = ds.GetArrayColumn(data, 2);
-            int[] expect = { 7, 10, 11 };
+            int[] expect = { 10, 11 };
             CollectionAssert.AreEqual(res, expect);
         }
 

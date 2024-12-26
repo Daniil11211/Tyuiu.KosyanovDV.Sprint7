@@ -30,9 +30,9 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             dataGridViewTable_KDV = new DataGridView();
             buttonOpenFile_KDV = new Button();
             buttonInfo_KDV = new Button();
@@ -59,11 +59,11 @@
             openFileDialogTask = new OpenFileDialog();
             saveFileDialogTask = new SaveFileDialog();
             toolTip = new ToolTip(components);
+            buttonDeleteChart = new Button();
+            buttonBuildChart_KDV = new Button();
             groupBoxChart_KDV = new GroupBox();
             textBoxChartColumn_KDV = new TextBox();
             labelTextColumn = new Label();
-            buttonDeleteChart = new Button();
-            buttonBuildChart_KDV = new Button();
             chartPrint_KDV = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)dataGridViewTable_KDV).BeginInit();
             groupBoxSearch_KDV.SuspendLayout();
@@ -78,6 +78,7 @@
             // 
             dataGridViewTable_KDV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewTable_KDV.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewTable_KDV.ColumnHeadersVisible = false;
             dataGridViewTable_KDV.Location = new Point(33, 287);
             dataGridViewTable_KDV.MinimumSize = new Size(539, 318);
             dataGridViewTable_KDV.Name = "dataGridViewTable_KDV";
@@ -85,6 +86,7 @@
             dataGridViewTable_KDV.RowHeadersWidth = 51;
             dataGridViewTable_KDV.Size = new Size(539, 554);
             dataGridViewTable_KDV.TabIndex = 0;
+            dataGridViewTable_KDV.CellContentClick += dataGridViewTable_KDV_CellContentClick;
             // 
             // buttonOpenFile_KDV
             // 
@@ -367,6 +369,30 @@
             // 
             openFileDialogTask.FileName = "openFileDialogTask";
             // 
+            // buttonDeleteChart
+            // 
+            buttonDeleteChart.Anchor = AnchorStyles.Right;
+            buttonDeleteChart.Image = (Image)resources.GetObject("buttonDeleteChart.Image");
+            buttonDeleteChart.Location = new Point(121, 29);
+            buttonDeleteChart.Name = "buttonDeleteChart";
+            buttonDeleteChart.Size = new Size(87, 51);
+            buttonDeleteChart.TabIndex = 1;
+            toolTip.SetToolTip(buttonDeleteChart, "Удалить график\r\nОчистить имеющийся график");
+            buttonDeleteChart.UseVisualStyleBackColor = true;
+            buttonDeleteChart.Click += buttonDeleteChart_Click;
+            // 
+            // buttonBuildChart_KDV
+            // 
+            buttonBuildChart_KDV.Anchor = AnchorStyles.Right;
+            buttonBuildChart_KDV.Image = (Image)resources.GetObject("buttonBuildChart_KDV.Image");
+            buttonBuildChart_KDV.Location = new Point(15, 27);
+            buttonBuildChart_KDV.Name = "buttonBuildChart_KDV";
+            buttonBuildChart_KDV.Size = new Size(87, 51);
+            buttonBuildChart_KDV.TabIndex = 0;
+            toolTip.SetToolTip(buttonBuildChart_KDV, "Построить график\r\nВведите столбец, по которому хотите построить график");
+            buttonBuildChart_KDV.UseVisualStyleBackColor = true;
+            buttonBuildChart_KDV.Click += buttonBuildChart_KDV_Click;
+            // 
             // groupBoxChart_KDV
             // 
             groupBoxChart_KDV.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -402,45 +428,21 @@
             labelTextColumn.TabIndex = 2;
             labelTextColumn.Text = "Введите столбец";
             // 
-            // buttonDeleteChart
-            // 
-            buttonDeleteChart.Anchor = AnchorStyles.Right;
-            buttonDeleteChart.Image = (Image)resources.GetObject("buttonDeleteChart.Image");
-            buttonDeleteChart.Location = new Point(121, 29);
-            buttonDeleteChart.Name = "buttonDeleteChart";
-            buttonDeleteChart.Size = new Size(87, 51);
-            buttonDeleteChart.TabIndex = 1;
-            toolTip.SetToolTip(buttonDeleteChart, "Удалить график\r\nОчистить имеющийся график");
-            buttonDeleteChart.UseVisualStyleBackColor = true;
-            buttonDeleteChart.Click += buttonDeleteChart_Click;
-            // 
-            // buttonBuildChart_KDV
-            // 
-            buttonBuildChart_KDV.Anchor = AnchorStyles.Right;
-            buttonBuildChart_KDV.Image = (Image)resources.GetObject("buttonBuildChart_KDV.Image");
-            buttonBuildChart_KDV.Location = new Point(15, 27);
-            buttonBuildChart_KDV.Name = "buttonBuildChart_KDV";
-            buttonBuildChart_KDV.Size = new Size(87, 51);
-            buttonBuildChart_KDV.TabIndex = 0;
-            toolTip.SetToolTip(buttonBuildChart_KDV, "Построить график\r\nВведите столбец, по которому хотите построить график");
-            buttonBuildChart_KDV.UseVisualStyleBackColor = true;
-            buttonBuildChart_KDV.Click += buttonBuildChart_KDV_Click;
-            // 
             // chartPrint_KDV
             // 
             chartPrint_KDV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            chartArea1.Name = "ChartArea1";
-            chartPrint_KDV.ChartAreas.Add(chartArea1);
-            legend1.Enabled = false;
-            legend1.Name = "Legend1";
-            chartPrint_KDV.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            chartPrint_KDV.ChartAreas.Add(chartArea2);
+            legend2.Enabled = false;
+            legend2.Name = "Legend1";
+            chartPrint_KDV.Legends.Add(legend2);
             chartPrint_KDV.Location = new Point(613, 287);
             chartPrint_KDV.MinimumSize = new Size(539, 318);
             chartPrint_KDV.Name = "chartPrint_KDV";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            chartPrint_KDV.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            chartPrint_KDV.Series.Add(series2);
             chartPrint_KDV.Size = new Size(539, 540);
             chartPrint_KDV.TabIndex = 15;
             // 
